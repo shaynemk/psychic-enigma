@@ -1,0 +1,16 @@
+[
+{
+  "modid": "chattymod",
+  "name": "Chatty Mod",
+  "description": "Mod for learning how to mess around with the Chat Box in MC 1.7.10.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["shaynemk"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
