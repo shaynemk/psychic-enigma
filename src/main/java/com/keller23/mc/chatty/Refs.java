@@ -7,6 +7,8 @@ class Refs {
     static final String MODID = "chatty";
     static final String VERSION = "0.1";
 
+    static final String CMD = "/" + MODID;
+
     // Config File Stuff
     public static final String CONFIGFILE = "chatty.cfg";
     static final String CATEGORY_DEBUG = "Debugging";

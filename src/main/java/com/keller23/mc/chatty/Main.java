@@ -42,13 +42,14 @@ public class Main
 
 
         MinecraftForge.EVENT_BUS.register(new ChatHandler());
-
-        /*System.out.println("Calling ChattyConfig.load()");
-        ChattyConfig.load();*/
     }
 
     @EventHandler
     public void serverLoad(FMLServerStartingEvent event) {
         event.registerServerCommand(new ChattyCommand());
+
+        if(Refs.REMOTE_ENABLED.getBoolean()) {
+            // TODO: 4/22/16 add in call to init server remote listener
+        }
     }
 }
