@@ -17,7 +17,10 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "0.1"
+def jenkinsBuild = System.getenv("BUILD_NUMBER") as String ?: "IDE"
+
+version = "0.1-" + jenkinsBuild
+//version = "0.1"
 group= "com.keller23.mc.chatty" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "chatty"
 
