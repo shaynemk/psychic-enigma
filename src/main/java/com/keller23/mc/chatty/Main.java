@@ -47,6 +47,7 @@ public class Main
     @EventHandler
     public void serverLoad(FMLServerStartingEvent event) {
         event.registerServerCommand(new ChattyCommand());
+        event.registerServerCommand(new RainlessCommand());
 
         if(Refs.REMOTE_ENABLED.getBoolean()) {
             // TODO: 4/22/16 add in call to init server remote listener
