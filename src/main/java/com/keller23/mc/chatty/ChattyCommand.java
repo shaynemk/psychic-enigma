@@ -8,12 +8,14 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.keller23.mc.chatty.Refs.Log;
+
 public class ChattyCommand implements ICommand {
 
     private List aliases;
     ChattyCommand() {
         this.aliases = new ArrayList();
-        this.aliases.add(Refs.MODID);
+        this.aliases.add("chatty");
         this.aliases.add("chm");
     }
 
@@ -39,11 +41,11 @@ public class ChattyCommand implements ICommand {
         World world = p_71515_1_.getEntityWorld();
         if(world.isRemote) {
             if(Refs.DEBUG.getBoolean()) {
-                System.out.println("Not processing command on Client.");
+                Log.debug("Not processing command on Client.");
             }
         } else {
             if(Refs.DEBUG.getBoolean()) {
-                System.out.println("Processing command on Server.");
+                Log.debug("Processing command on Server.");
             }
 
             if(p_71515_2_.length > 0) {
@@ -55,7 +57,7 @@ public class ChattyCommand implements ICommand {
                             for (int i = 0; i < p_71515_2_.length; i++) {
                                 System.out.print(p_71515_2_[i]);
                             }
-                            System.out.println();
+                            //Log.info(");
                         } else if (p_71515_2_[1].equals("whoami")) {
                             p_71515_1_.addChatMessage(new ChatComponentText("You are: " + p_71515_1_.getCommandSenderName() + "."));
                         }

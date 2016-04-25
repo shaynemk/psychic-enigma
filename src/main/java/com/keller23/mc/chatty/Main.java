@@ -1,43 +1,57 @@
 package com.keller23.mc.chatty;
 
+import com.keller23.mc.chatty.proxy.CommonProxy;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 
+import static com.keller23.mc.chatty.Refs.Config;
+import static com.keller23.mc.chatty.Refs.Log;
+
+
 @Mod(modid = Refs.MODID, version = Refs.VERSION)
 public class Main
 {
+
+    @SidedProxy(clientSide = Refs.CLIENT_PROXY, serverSide = Refs.COMMON_PROXY)
+    public static CommonProxy proxy;
+
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        Configuration config = new Configuration(event.getSuggestedConfigurationFile());
+        Log = FMLLog.getLogger();
 
-        System.out.println("Loading Config");
-        config.load();
+        Log.debug("Chatty PreInit");
 
-        Refs.DEBUG = config.get(Refs.CATEGORY_DEBUG, Refs.NAME_DEBUG, Refs.DEFAULT_DEBUG_VALUE);
+        Config = new Configuration(event.getSuggestedConfigurationFile());
+        Config.load();
+
+        Refs.DEBUG = Config.get(Refs.CATEGORY_DEBUG, Refs.NAME_DEBUG, Refs.DEFAULT_DEBUG_VALUE);
         Refs.DEBUG.comment = Refs.DEFAULT_DEBUG_COMMENT;
 
-        Refs.REMOTE_ENABLED = config.get(Refs.CATEGORY_REMOTE, Refs.NAME_REMOTE_ENABLED, Refs.DEFAULT_REMOTE_ENABLED_VALUE);
+        Refs.REMOTE_ENABLED = Config.get(Refs.CATEGORY_REMOTE, Refs.NAME_REMOTE_ENABLED, Refs.DEFAULT_REMOTE_ENABLED_VALUE);
         Refs.REMOTE_ENABLED.comment = Refs.DEFAULT_REMOTE_ENABLED_COMMENT;
 
-        Refs.REMOTE_PORT = config.get(Refs.CATEGORY_REMOTE, Refs.NAME_REMOTE_PORT, Refs.DEFAULT_REMOTE_PORT_VALUE);
+        Refs.REMOTE_PORT = Config.get(Refs.CATEGORY_REMOTE, Refs.NAME_REMOTE_PORT, Refs.DEFAULT_REMOTE_PORT_VALUE);
         Refs.REMOTE_PORT.comment = Refs.DEFAULT_REMOTE_PORT_COMMENT;
 
-        config.save();
+        Config.save();
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-        System.out.println("Hello, Minecraft!");
-        System.out.println("Oh, how I missed you...");
+        Log.debug("Chatty Init");
+        Log.info("Hello, Minecraft!");
+        Log.info("Oh, how I missed you...");
 
         if(Refs.DEBUG.getBoolean()) {
-            System.out.println("Registering ChatHandler");
+            Log.debug("Registering ChatHandler");
         }
 
 
@@ -46,6 +60,7 @@ public class Main
 
     @EventHandler
     public void serverLoad(FMLServerStartingEvent event) {
+        Log.debug("Chatty serverLoad");
         event.registerServerCommand(new ChattyCommand());
         event.registerServerCommand(new RainlessCommand());
 

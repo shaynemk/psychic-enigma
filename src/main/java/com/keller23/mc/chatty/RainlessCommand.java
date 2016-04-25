@@ -2,7 +2,9 @@ package com.keller23.mc.chatty;
 
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.world.World;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.world.storage.WorldInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ public class RainlessCommand implements ICommand {
 
     @Override
     public String getCommandUsage(ICommandSender p_71518_1_) {
-        return "/rainless <args>";
+        return "/rainless start|stop";
     }
 
     @Override
@@ -33,9 +35,24 @@ public class RainlessCommand implements ICommand {
 
     @Override
     public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_) {
-        //asdf
-        World world = p_71515_1_.getEntityWorld();
-        //world.addWeatherEffect()
+        if(p_71515_2_.length < 1) {
+            p_71515_1_.addChatMessage(new ChatComponentText("Not enough arguments"));
+            return;
+        } else {
+            if(p_71515_2_[0].equals("stop")) {
+                this.rain(false);
+                p_71515_1_.addChatMessage(new ChatComponentText("Rain, rain, go away..."));
+            } else if(p_71515_2_[0].equals("start")) {
+                this.rain(true);
+                p_71515_1_.addChatMessage(new ChatComponentText("Is it raining yet?"));
+            } else {
+                p_71515_1_.addChatMessage(new ChatComponentText("Unrecognized argument"));
+                return;
+            }
+        }
+        // TODO: 4/25/16 remove experience from player for modifying the weather
+        //EntityPlayer player = MinecraftServer.getServer().
+
     }
 
     /**
@@ -111,5 +128,12 @@ public class RainlessCommand implements ICommand {
     @Override
     public int compareTo(Object o) {
         return 0;
+    }
+
+    protected void rain(boolean shouldItRain) {
+        WorldInfo worldinfo = MinecraftServer.getServer().worldServers[0].getWorldInfo();
+        worldinfo.setRaining(shouldItRain);
+        //.rainingStrength = 1.0F;
+
     }
 }

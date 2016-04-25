@@ -1,15 +1,24 @@
 package com.keller23.mc.chatty;
 
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+import org.apache.logging.log4j.Logger;
 
 class Refs {
 
     static final String MODID = "chatty";
+    static final String MODNAME = "Chatty";
     static final String VERSION = "0.1";
+
+    static final String CLIENT_PROXY = "com.keller23.mc.chatty.proxy.ClientProxy";
+    static final String COMMON_PROXY = "com.keller23.mc.chatty.proxy.CommonProxy";
+
+    static Logger Log;
 
     static final String CMD = "/" + MODID;
 
     // Config File Stuff
+    static Configuration Config;
     public static final String CONFIGFILE = "chatty.cfg";
     static final String CATEGORY_DEBUG = "Debugging";
     static final String CATEGORY_REMOTE = "Remote Control";
@@ -33,4 +42,5 @@ class Refs {
     static final boolean DEFAULT_DEBUG_VALUE = false;
     static final boolean DEFAULT_REMOTE_ENABLED_VALUE = false;
     static final int DEFAULT_REMOTE_PORT_VALUE = 2428;
+
 }
