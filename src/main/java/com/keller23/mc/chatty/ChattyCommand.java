@@ -80,6 +80,12 @@ public class ChattyCommand implements ICommand {
                             p_71515_1_.addChatMessage(new ChatComponentText(Refs.CMD + " config help - This"));
                             p_71515_1_.addChatMessage(new ChatComponentText(Refs.CMD + " config debug - Debug Logging WIP"));
                             p_71515_1_.addChatMessage(new ChatComponentText(Refs.CMD + " config breakmsg - En/Disable Block broken messages"));
+                        } else if(p_71515_2_[1].equals("remote")) {
+                            if(p_71515_2_[2].equals("true")) {
+                                //Refs.Config.set
+                            } else if(p_71515_2_[2].equals("false")) {
+
+                            }
                         } else if(p_71515_2_[1].equals("breakmsg")) {
                             if(p_71515_2_.length > 2) {
                                 if(p_71515_2_[2].equals("enable")) {

@@ -4,7 +4,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import org.apache.logging.log4j.Logger;
 
-class Refs {
+public class Refs {
 
     static final String MODID = "chatty";
     static final String MODNAME = "Chatty";
@@ -25,8 +25,8 @@ class Refs {
 
     // Properties
     static Property DEBUG;
-    static Property REMOTE_ENABLED;
-    static Property REMOTE_PORT;
+    public static Property REMOTE_ENABLED;
+    public static Property REMOTE_PORT;
 
     // Property Names
     static final String NAME_DEBUG = "debugging";
@@ -40,7 +40,7 @@ class Refs {
 
     // Property Default Values
     static final boolean DEFAULT_DEBUG_VALUE = false;
-    static final boolean DEFAULT_REMOTE_ENABLED_VALUE = false;
-    static final int DEFAULT_REMOTE_PORT_VALUE = 2428;
+    public static final boolean DEFAULT_REMOTE_ENABLED_VALUE = false;
+    public static final int DEFAULT_REMOTE_PORT_VALUE = 4444;
 
 }

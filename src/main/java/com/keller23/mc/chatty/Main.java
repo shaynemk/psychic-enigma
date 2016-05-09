@@ -1,5 +1,6 @@
 package com.keller23.mc.chatty;
 
+import com.keller23.mc.chatty.KnockKnock.KKMultiServer;
 import com.keller23.mc.chatty.proxy.CommonProxy;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
@@ -10,6 +11,8 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+
+import java.io.IOException;
 
 import static com.keller23.mc.chatty.Refs.Config;
 import static com.keller23.mc.chatty.Refs.Log;
@@ -59,13 +62,13 @@ public class Main
     }
 
     @EventHandler
-    public void serverLoad(FMLServerStartingEvent event) {
+    public void serverLoad(FMLServerStartingEvent event) throws IOException {
         Log.debug("Chatty serverLoad");
         event.registerServerCommand(new ChattyCommand());
         event.registerServerCommand(new RainlessCommand());
 
         if(Refs.REMOTE_ENABLED.getBoolean()) {
-            // TODO: 4/22/16 add in call to init server remote listener
+            KKMultiServer.main();
         }
     }
 }
