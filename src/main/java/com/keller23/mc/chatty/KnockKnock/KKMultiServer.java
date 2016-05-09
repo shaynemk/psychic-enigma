@@ -44,7 +44,7 @@ public class KKMultiServer {
         if (args.length != 1) {
             System.err.println("Usage: java KKMultiServer <port number>");
             //System.exit(1);
-        } else if (args.length == 1) {
+        } else {
             SERVERPORT = Integer.parseInt(args[0]);
             init();
         }

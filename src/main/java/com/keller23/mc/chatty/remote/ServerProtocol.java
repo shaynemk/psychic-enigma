@@ -1,4 +1,4 @@
-package com.keller23.mc.chatty;
+package com.keller23.mc.chatty.remote;
 
 public class ServerProtocol {
 

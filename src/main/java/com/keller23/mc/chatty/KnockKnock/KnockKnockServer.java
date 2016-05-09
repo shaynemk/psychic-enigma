@@ -80,35 +80,96 @@ public class KnockKnockServer implements Runnable {
             System.out.println("KnockKnockServer starting on SERVERPORT " + SERVERPORT);
 
             //int portNumber = Integer.parseInt(args[0]);
-            while (Refs.REMOTE_ENABLED.getBoolean()) {
-                try {
-                    ServerSocket serverSocket = new ServerSocket(SERVERPORT);
+            //while (Refs.REMOTE_ENABLED.getBoolean()) {
+            ServerSocket serverSocket = null;
+            try {
+                if(available(SERVERPORT)) {
+                    System.out.println("Port (" + SERVERPORT + ") is available, starting server.");
+                    serverSocket = new ServerSocket(SERVERPORT);
+                } else {
+                    System.out.println("Port (" + SERVERPORT + ") is currently being used.");
+                    //return;
+                }
+                if(serverSocket != null) {
+                    System.out.println("serverSocket is not null, waiting for and processing connections");
                     Socket clientSocket = serverSocket.accept();
-                    PrintWriter out =
-                            new PrintWriter(clientSocket.getOutputStream(), true);
-                    BufferedReader in = new BufferedReader(
-                            new InputStreamReader(clientSocket.getInputStream()));
-
+                    PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+                    BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
                     String inputLine, outputLine;
 
                     // Initiate conversation with client
                     KnockKnockProtocol kkp = new KnockKnockProtocol();
-                    outputLine = kkp.processInput(null);
-                    out.println(outputLine);
 
-                    while ((inputLine = in.readLine()) != null) {
-                        outputLine = kkp.processInput(inputLine);
-                        out.println(outputLine);
-                        if (outputLine.equals("Bye."))
-                            break;
+                    try {// TODO: 5/9/16 Need to make this server recur. Will currently die as soon as client closes.
+                        while(true) {
+                            System.out.println("Start processing ");
+                            outputLine = kkp.processInput(null);
+                            out.println(outputLine);
+
+                            System.out.println("");
+                            while ((inputLine = in.readLine()) != null) {
+                                outputLine = kkp.processInput(inputLine);
+                                out.println(outputLine);
+                                if (outputLine.equals("Bye."))
+                                    break;
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+                }
+            } catch (IOException e) {
+                System.out.println("Exception caught when trying to listen on SERVERPORT "
+                        + SERVERPORT + " or listening for a connection");
+                System.out.println(e.getMessage());
+            }
+
+            /*if (serverSocket != null) {
+                try {
+                    ss.close();
                 } catch (IOException e) {
-                    System.out.println("Exception caught when trying to listen on SERVERPORT "
-                            + SERVERPORT + " or listening for a connection");
-                    System.out.println(e.getMessage());
+                *//* should not be thrown *//*
+                }
+            }*/
+            //}
+        }
+    }
+
+
+    /**
+     * Checks to see if a specific port is available.
+     *
+     * @param port the port to check for availability
+     */
+    private static boolean available(int port) {
+        /*if (port < MIN_PORT_NUMBER || port > MAX_PORT_NUMBER) {
+            throw new IllegalArgumentException("Invalid start port: " + port);
+        }*/
+
+        ServerSocket ss = null;
+        //DatagramSocket ds = null;
+        try {
+            ss = new ServerSocket(port);
+            ss.setReuseAddress(true);
+            //ds = new DatagramSocket(port);
+            //ds.setReuseAddress(true);
+            return true;
+        } catch (IOException e) {
+        } finally {
+            /*if (ds != null) {
+                ds.close();
+            }*/
+
+            if (ss != null) {
+                try {
+                    ss.close();
+                } catch (IOException e) {
+                /* should not be thrown */
                 }
             }
         }
+
+        return false;
     }
 }

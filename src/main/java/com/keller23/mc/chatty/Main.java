@@ -1,6 +1,6 @@
 package com.keller23.mc.chatty;
 
-import com.keller23.mc.chatty.KnockKnock.KKMultiServer;
+import com.keller23.mc.chatty.KnockKnock.KnockKnockServer;
 import com.keller23.mc.chatty.proxy.CommonProxy;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
@@ -68,7 +68,8 @@ public class Main
         event.registerServerCommand(new RainlessCommand());
 
         if(Refs.REMOTE_ENABLED.getBoolean()) {
-            KKMultiServer.main();
+            //KKMultiServer.main();
+            KnockKnockServer.main();
         }
     }
 }

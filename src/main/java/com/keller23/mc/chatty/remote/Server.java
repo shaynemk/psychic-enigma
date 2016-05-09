@@ -1,4 +1,6 @@
-package com.keller23.mc.chatty;
+package com.keller23.mc.chatty.remote;
+
+import com.keller23.mc.chatty.Refs;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
